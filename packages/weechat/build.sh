@@ -4,9 +4,9 @@ TERMUX_PKG_LICENSE="GPL-3.0"
 TERMUX_PKG_MAINTAINER="@termux"
 # `weechat-python-plugin` depends on libpython${TERMUX_PYTHON_VERSION}.so.
 # Please revbump and rebuild when bumping TERMUX_PYTHON_VERSION.
-TERMUX_PKG_VERSION="4.2.2"
+TERMUX_PKG_VERSION="4.3.3"
 TERMUX_PKG_SRCURL=https://www.weechat.org/files/src/weechat-${TERMUX_PKG_VERSION}.tar.xz
-TERMUX_PKG_SHA256=20968b22c7f0f50df9cf6ff8598dd1bd017c5759b2c94593f5d9ed7b24ebb941
+TERMUX_PKG_SHA256=5587db6cea33895bda101c46a6d09e9fc08e0fca76ff8ac3b144dab32b105ed8
 TERMUX_PKG_DEPENDS="libandroid-support, libcurl, libgcrypt, libgnutls, libiconv, ncurses, zlib, zstd"
 TERMUX_PKG_BREAKS="weechat-dev"
 TERMUX_PKG_REPLACES="weechat-dev"
@@ -17,24 +17,22 @@ share/icons
 share/man/man1/weechat-headless.1
 "
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
--DCA_FILE=${TERMUX_PREFIX}/etc/tls/cert.pem
 -DGETTEXT_FOUND=ON
+-DENABLE_CJSON=OFF
 -DENABLE_GUILE=OFF
 -DENABLE_HEADLESS=OFF
 -DENABLE_JAVASCRIPT=OFF
 -DENABLE_LUA=ON
 -DENABLE_MAN=ON
 -DENABLE_PERL=ON
--DENABLE_PYTHON3=ON
+-DENABLE_PYTHON=ON
 -DENABLE_PHP=OFF
 -DENABLE_RUBY=ON
 -DENABLE_SPELL=OFF
 -DENABLE_TCL=OFF
 -DENABLE_TESTS=OFF
--DLIBGCRYPT_CONFIG_EXECUTABLE=${TERMUX_PREFIX}/bin/libgcrypt-config
 -DMSGFMT_EXECUTABLE=$(command -v msgfmt)
 -DMSGMERGE_EXECUTABLE=$(command -v msgmerge)
--DSTRICT=ON
 -DXGETTEXT_EXECUTABLE=$(command -v xgettext)
 "
 

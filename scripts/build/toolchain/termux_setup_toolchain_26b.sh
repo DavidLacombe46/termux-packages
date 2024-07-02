@@ -72,6 +72,11 @@ termux_setup_toolchain_26b() {
 		LDFLAGS+=" -fno-openmp-implicit-rpath"
 	fi
 
+	# Remove option `openmp-implicit-rpath` in next NDK major bump.
+	if [ "$TERMUX_NDK_VERSION_NUM" != 26 ]; then
+		termux_error_exit "Remove the useless option \`-fopenmp-implicit-rpath\` and rebuild the libllvm."
+	fi
+
 	# Android 7 started to support DT_RUNPATH (but not DT_RPATH).
 	LDFLAGS+=" -Wl,--enable-new-dtags"
 
@@ -118,15 +123,6 @@ termux_setup_toolchain_26b() {
 	fi
 
 	if [ -d $TERMUX_STANDALONE_TOOLCHAIN ]; then
-		for HOST_PLAT in aarch64-linux-android armv7a-linux-androideabi i686-linux-android x86_64-linux-android arm-linux-androideabi; do
-			if [ "$TERMUX_PKG_ENABLE_CLANG16_PORTING" = "true" ]; then
-				cp $TERMUX_STANDALONE_TOOLCHAIN/bin/$HOST_PLAT-clang.16-porting \
-					$TERMUX_STANDALONE_TOOLCHAIN/bin/$HOST_PLAT-clang
-			else
-				cp $TERMUX_STANDALONE_TOOLCHAIN/bin/$HOST_PLAT-clang.no-16-porting \
-					$TERMUX_STANDALONE_TOOLCHAIN/bin/$HOST_PLAT-clang
-			fi
-		done
 		return
 	fi
 
@@ -169,22 +165,6 @@ termux_setup_toolchain_26b() {
 		$_TERMUX_TOOLCHAIN_TMPDIR/bin/arm-linux-androideabi-clang++
 	cp $_TERMUX_TOOLCHAIN_TMPDIR/bin/armv7a-linux-androideabi-cpp \
 		$_TERMUX_TOOLCHAIN_TMPDIR/bin/arm-linux-androideabi-cpp
-
-	for HOST_PLAT in aarch64-linux-android armv7a-linux-androideabi i686-linux-android x86_64-linux-android arm-linux-androideabi; do
-		mv $_TERMUX_TOOLCHAIN_TMPDIR/bin/$HOST_PLAT-clang \
-			$_TERMUX_TOOLCHAIN_TMPDIR/bin/$HOST_PLAT-clang.no-16-porting
-		cp $_TERMUX_TOOLCHAIN_TMPDIR/bin/$HOST_PLAT-clang.no-16-porting \
-			$_TERMUX_TOOLCHAIN_TMPDIR/bin/$HOST_PLAT-clang.16-porting
-		sed -i 's/"\$@"/--start-no-unused-arguments -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=int-conversion -Wno-error=incompatible-function-pointer-types --end-no-unused-arguments \0/g' \
-			$_TERMUX_TOOLCHAIN_TMPDIR/bin/$HOST_PLAT-clang.no-16-porting
-		if [ "$TERMUX_PKG_ENABLE_CLANG16_PORTING" = "true" ]; then
-			cp $_TERMUX_TOOLCHAIN_TMPDIR/bin/$HOST_PLAT-clang.16-porting \
-				$_TERMUX_TOOLCHAIN_TMPDIR/bin/$HOST_PLAT-clang
-		else
-			cp $_TERMUX_TOOLCHAIN_TMPDIR/bin/$HOST_PLAT-clang.no-16-porting \
-				$_TERMUX_TOOLCHAIN_TMPDIR/bin/$HOST_PLAT-clang
-		fi
-	done
 
 	# rust 1.75.0+ expects this directory to be present
 	rm -fr "${_TERMUX_TOOLCHAIN_TMPDIR}"/toolchains

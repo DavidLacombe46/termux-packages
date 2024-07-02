@@ -2,10 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://nodejs.org/
 TERMUX_PKG_DESCRIPTION="Open Source, cross-platform JavaScript runtime environment"
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="Yaksh Bariya <thunder-coding@termux.dev>"
-TERMUX_PKG_VERSION=21.6.2
-TERMUX_PKG_REVISION=2
+TERMUX_PKG_VERSION=22.3.0
 TERMUX_PKG_SRCURL=https://nodejs.org/dist/v${TERMUX_PKG_VERSION}/node-v${TERMUX_PKG_VERSION}.tar.xz
-TERMUX_PKG_SHA256=191294d445d1e6800359acc8174529b1e18e102147dc5f596030d3dce96931e5
+TERMUX_PKG_SHA256=bfb85bd1dca517761f9046d61600f830d19935d6d6c36eded01578a19326104c
 # thunder-coding: don't try to autoupdate nodejs, that thing takes 2 whole hours to build for a single arch, and requires a lot of patch updates everytime. Also I run tests everytime I update it to ensure least bugs
 TERMUX_PKG_AUTO_UPDATE=false
 # Note that we do not use a shared libuv to avoid an issue with the Android
@@ -45,7 +44,7 @@ termux_step_host_build() {
 			--disable-samples \
 			--disable-tests
 	fi
-	make -j $TERMUX_MAKE_PROCESSES install
+	make -j $TERMUX_PKG_MAKE_PROCESSES install
 }
 
 termux_step_pre_configure() {
@@ -101,18 +100,20 @@ termux_step_configure() {
 
 termux_step_make() {
 	if [ "${TERMUX_DEBUG_BUILD}" = "true" ]; then
-		ninja -C out/Debug -j "${TERMUX_MAKE_PROCESSES}"
+		ninja -C out/Debug -j "${TERMUX_PKG_MAKE_PROCESSES}"
 	else
-		ninja -C out/Release -j "${TERMUX_MAKE_PROCESSES}"
+		ninja -C out/Release -j "${TERMUX_PKG_MAKE_PROCESSES}"
 	fi
 }
 
 termux_step_make_install() {
+	local _BUILD_DIR=out/
 	if [ "${TERMUX_DEBUG_BUILD}" = "true" ]; then
-		python tools/install.py install "" "${TERMUX_PREFIX}" out/Debug/
+		_BUILD_DIR+="/Debug/"
 	else
-		python tools/install.py install "" "${TERMUX_PREFIX}" out/Release/
+		_BUILD_DIR+="/Release/"
 	fi
+	python tools/install.py install --dest-dir="" --prefix "${TERMUX_PREFIX}" --build-dir "$_BUILD_DIR"
 }
 
 termux_step_create_debscripts() {

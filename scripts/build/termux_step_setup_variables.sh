@@ -5,7 +5,7 @@ termux_step_setup_variables() {
 	: "${TERMUX_FORCE_BUILD:="false"}"
 	: "${TERMUX_FORCE_BUILD_DEPENDENCIES:="false"}"
 	: "${TERMUX_INSTALL_DEPS:="false"}"
-	: "${TERMUX_MAKE_PROCESSES:="$(nproc)"}"
+	: "${TERMUX_PKG_MAKE_PROCESSES:="$(nproc)"}"
 	: "${TERMUX_NO_CLEAN:="false"}"
 	: "${TERMUX_PKG_API_LEVEL:="24"}"
 	: "${TERMUX_CONTINUE_BUILD:="false"}"
@@ -141,7 +141,6 @@ termux_step_setup_variables() {
 	TERMUX_PKG_DEPENDS=""
 	TERMUX_PKG_DESCRIPTION="FIXME:Add description"
 	TERMUX_PKG_DISABLE_GIR=false # termux_setup_gir
-	TERMUX_PKG_ENABLE_CLANG16_PORTING=true
 	TERMUX_PKG_ESSENTIAL=false
 	TERMUX_PKG_EXTRA_CONFIGURE_ARGS=""
 	TERMUX_PKG_EXTRA_HOSTBUILD_CONFIGURE_ARGS=""

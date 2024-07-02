@@ -1,16 +1,7 @@
---- ./node.gyp.orig	2024-02-16 19:22:17.091451678 +0530
-+++ ./node.gyp	2024-02-16 19:24:32.148773304 +0530
-@@ -473,9 +473,6 @@
-     },
- 
-     'conditions': [
--      ['target_arch=="arm64"', {
--        'cflags': ['-mbranch-protection=standard'],  # Pointer authentication.
--      }],
-       ['OS in "aix os400"', {
-         'ldflags': [
-           '-Wl,-bnoerrmsg',
-@@ -522,7 +519,8 @@
+diff -u -r ../node-v22.3.0/node.gyp ./node.gyp
+--- ../node-v22.3.0/node.gyp	2024-06-11 13:24:36.000000000 +0000
++++ ./node.gyp	2024-06-19 21:36:41.345330645 +0000
+@@ -548,7 +548,8 @@
        ],
  
        'sources': [
@@ -20,7 +11,7 @@
        ],
  
        'dependencies': [
-@@ -1002,208 +1000,6 @@
+@@ -1026,49 +1027,6 @@
          },
        ],
      }, # node_lib_target_name
@@ -30,8 +21,8 @@
 -      'dependencies': [
 -        '<(node_lib_target_name)',
 -        'deps/histogram/histogram.gyp:histogram',
--        'deps/uvwasi/uvwasi.gyp:uvwasi',
 -      ],
+-
 -      'includes': [
 -        'node.gypi'
 -      ],
@@ -41,9 +32,9 @@
 -        'deps/v8/include',
 -        'deps/cares/include',
 -        'deps/uv/include',
--        'deps/uvwasi/include',
 -        'test/cctest',
 -      ],
+-
 -      'defines': [
 -        'NODE_ARCH="<(target_arch)"',
 -        'NODE_PLATFORM="<(OS)"',
@@ -67,17 +58,22 @@
 -        }],
 -      ],
 -    }, # fuzz_env
+     { # fuzz_ClientHelloParser.cc
+       'target_name': 'fuzz_ClientHelloParser',
+       'type': 'executable',
+@@ -1157,83 +1115,6 @@
+         }],
+       ],
+     }, # fuzz_strings
 -    {
 -      'target_name': 'cctest',
 -      'type': 'executable',
 -
 -      'dependencies': [
 -        '<(node_lib_target_name)',
--        'deps/base64/base64.gyp:base64',
 -        'deps/googletest/googletest.gyp:gtest',
 -        'deps/googletest/googletest.gyp:gtest_main',
 -        'deps/histogram/histogram.gyp:histogram',
--        'deps/uvwasi/uvwasi.gyp:uvwasi',
 -        'deps/simdjson/simdjson.gyp:simdjson',
 -        'deps/simdutf/simdutf.gyp:simdutf',
 -        'deps/ada/ada.gyp:ada',
@@ -93,7 +89,6 @@
 -        'deps/v8/include',
 -        'deps/cares/include',
 -        'deps/uv/include',
--        'deps/uvwasi/include',
 -        'test/cctest',
 -      ],
 -
@@ -147,89 +142,10 @@
 -        }],
 -      ],
 -    }, # cctest
--
--    {
--      'target_name': 'embedtest',
--      'type': 'executable',
--
--      'dependencies': [
--        '<(node_lib_target_name)',
--        'deps/histogram/histogram.gyp:histogram',
--        'deps/uvwasi/uvwasi.gyp:uvwasi',
--        'deps/ada/ada.gyp:ada',
--      ],
--
--      'includes': [
--        'node.gypi'
--      ],
--
--      'include_dirs': [
--        'src',
--        'tools/msvs/genfiles',
--        'deps/v8/include',
--        'deps/cares/include',
--        'deps/uv/include',
--        'deps/uvwasi/include',
--        'test/embedding',
--      ],
--
--      'sources': [
--        'src/node_snapshot_stub.cc',
--        'test/embedding/embedtest.cc',
--      ],
--
--      'conditions': [
--        ['OS=="solaris"', {
--          'ldflags': [ '-I<(SHARED_INTERMEDIATE_DIR)' ]
--        }],
--        # Skip cctest while building shared lib node for Windows
--        [ 'OS=="win" and node_shared=="true"', {
--          'type': 'none',
--        }],
--        [ 'node_shared=="true"', {
--          'xcode_settings': {
--            'OTHER_LDFLAGS': [ '-Wl,-rpath,@loader_path', ],
--          },
--        }],
--        ['OS=="win"', {
--          'libraries': [
--            'Dbghelp.lib',
--            'winmm.lib',
--            'Ws2_32.lib',
--          ],
--        }],
--        # Avoid excessive LTO
--        ['enable_lto=="true"', {
--          'ldflags': [ '-fno-lto' ],
--        }],
--      ],
--    }, # embedtest
--
--    {
--      'target_name': 'overlapped-checker',
--      'type': 'executable',
--
--      'conditions': [
--        ['OS=="win"', {
--          'sources': [
--            'test/overlapped-checker/main_win.c'
--          ],
--        }],
--        ['OS!="win"', {
--          'sources': [
--            'test/overlapped-checker/main_unix.c'
--          ],
--        }],
--        # Avoid excessive LTO
--        ['enable_lto=="true"', {
--          'ldflags': [ '-fno-lto' ],
--        }],
--      ]
--    }, # overlapped-checker
+ 
      {
-       'target_name': 'node_js2c',
-       'type': 'executable',
-@@ -1237,69 +1033,6 @@
+       'target_name': 'embedtest',
+@@ -1348,69 +1229,6 @@
          }],
        ]
      },
@@ -240,8 +156,9 @@
 -      'dependencies': [
 -        '<(node_lib_target_name)',
 -        'deps/histogram/histogram.gyp:histogram',
--        'deps/uvwasi/uvwasi.gyp:uvwasi',
 -        'deps/ada/ada.gyp:ada',
+-        'deps/simdjson/simdjson.gyp:simdjson',
+-        'deps/simdutf/simdutf.gyp:simdutf',
 -      ],
 -
 -      'includes': [
@@ -254,7 +171,6 @@
 -        'deps/v8/include',
 -        'deps/cares/include',
 -        'deps/uv/include',
--        'deps/uvwasi/include',
 -      ],
 -
 -      'defines': [ 'NODE_WANT_INTERNALS=1' ],
