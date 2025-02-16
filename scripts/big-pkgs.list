@@ -1,8 +1,11 @@
 angle-android
 bionic-host
+carbonyl-host-tools
+carbonyl
 clvk
 dart
 dotnet8.0
+dotnet9.0
 firefox
 grafana
 libllvm

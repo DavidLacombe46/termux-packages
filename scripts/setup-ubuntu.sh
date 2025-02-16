@@ -294,6 +294,10 @@ PACKAGES+=" libwebp7 libwebp7:i386 libwebp-dev"
 PACKAGES+=" libwebpdemux2 libwebpdemux2:i386"
 PACKAGES+=" libwebpmux3 libwebpmux3:i386"
 
+# Required by chromium-based packages
+PACKAGES+=" libfontconfig1"
+PACKAGES+=" libfontconfig1:i386"
+
 # Required by wine-stable
 PACKAGES+=" libfreetype-dev:i386"
 
@@ -342,7 +346,7 @@ echo -e 'LANG="en_US.UTF-8"\nLANGUAGE="en_US:en"\n' | $SUDO tee -a /etc/default/
 . $(dirname "$(realpath "$0")")/properties.sh
 $SUDO mkdir -p $TERMUX_PREFIX
 $SUDO chown -R $(whoami) /data
-$SUDO ln -sf /data/data/com.termux/files/usr/opt/bionic-host /system
+$SUDO ln -sf /data/data/com.termux/files/usr/opt/aosp /system
 
 # Install newer pkg-config then what ubuntu provides, as the stock
 # ubuntu version has performance problems with at least protobuf:
