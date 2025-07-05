@@ -177,6 +177,10 @@ source "$TERMUX_SCRIPTDIR/scripts/build/setup/termux_setup_cmake.sh"
 # shellcheck source=scripts/build/setup/termux_setup_protobuf.sh
 source "$TERMUX_SCRIPTDIR/scripts/build/setup/termux_setup_protobuf.sh"
 
+# Utility function to setup the current version of the tree-sitter CLI
+# shellcheck source=scripts/build/setup/termux_setup_treesitter.sh
+source "$TERMUX_SCRIPTDIR/scripts/build/setup/termux_setup_treesitter.sh"
+
 # Setup variables used by the build. Not to be overridden by packages.
 # shellcheck source=scripts/build/termux_step_setup_variables.sh
 source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_setup_variables.sh"
@@ -389,6 +393,11 @@ source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_create_debian_package.sh"
 # Create the build .pkg.tar.xz file. Not to be overridden by package scripts.
 # shellcheck source=scripts/build/termux_step_create_pacman_package.sh
 source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_create_pacman_package.sh"
+
+# Process 'update-alternatives' entries from `.alternatives` files.
+# Not to be overridden by package scripts.
+# shellcheck source=scripts/build/termux_step_update_alternatives.sh
+source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_update_alternatives.sh"
 
 # Finish the build. Not to be overridden by package scripts.
 # shellcheck source=scripts/build/termux_step_finish_build.sh
