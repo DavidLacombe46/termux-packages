@@ -15,6 +15,10 @@
 /scripts/ @Grimler91 @thunder-coding
 /repo.json @Grimler91 @thunder-coding
 
+# Repository Health Check
+/scripts/check-repository-health.js @thunder-coding
+/scripts/generate-apt-packages-list.sh @thunder-coding
+
 # GN setup script
 /scripts/build/setup/termux_setup_gn.sh @thunder-coding
 
@@ -69,6 +73,7 @@
 /packages/tvheadend/ @MrAdityaAlok
 
 # Packages owned by @thunder-coding
+/packages/command-not-found/ @thunder-coding
 /packages/flyctl/ @thunder-coding
 /packages/git-sizer/ @thunder-coding
 /packages/gn/ @thunder-coding
@@ -83,11 +88,13 @@
 /packages/bash/ @TomJo2000
 /packages/borgbackup/ @TomJo2000
 /packages/coreutils/ @TomJo2000
+/packages/diffutils/ @TomJo2000
 /packages/eza/ @TomJo2000
 /packages/git/ @TomJo2000
 /packages/git-delta/ @TomJo2000
 /packages/gopass/ @TomJo2000
 /packages/gopls/ @TomJo2000
+/packages/grep/ @TomJo2000
 /packages/less/ @TomJo2000
 /packages/lesspipe/ @TomJo2000
 /packages/lua-language-server/ @TomJo2000
@@ -121,7 +128,7 @@
 /x11-packages/vim-gtk/ @TomJo2000
 
 # Packages owned by @2096779623
-/packages/alist/ @2096779623
+/packages/openlist/ @2096779623
 /packages/frp/ @2096779623
 
 # Packages owned by @twaik
@@ -132,6 +139,7 @@
 /packages/glibc-repo/ @Maxython
 
 # Packages owned by @licy183
+/packages/deno/ @licy183
 /packages/llvm-mingw-w64/ @licy183
 /packages/llvm-mingw-w64-libcompiler-rt/ @licy183
 /packages/llvm-mingw-w64-tools/ @licy183
@@ -141,6 +149,7 @@
 /packages/virglrenderer-android/ @licy183
 /x11-packages/carbonyl/ @licy183
 /x11-packages/carbonyl-host-tools/ @licy183
+/x11-packages/code-oss/ @licy183
 /x11-packages/chromium/ @licy183
 /x11-packages/chromium-host-tools/ @licy183
 /x11-packages/electron-for-code-oss @licy183
